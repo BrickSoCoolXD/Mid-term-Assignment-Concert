@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Make a Reservation</title>
+    <!-- Include Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <!--TODO: complete th:action in the <form> -->
+        <form th:action="@{/book/concerts/{id}(id=${concert.id})}" th:object="${reservation}" method="post">
+            <div class="form-group">
+                <!-- TODO: add label and field for firstName, lastName and email  -->
+                <label for="firstName">First name:</label>
+                <input type="text" class="form-control" id="firstName" th:field="*{firstName}" required>
+                <label for="lastName">Last name:</label>
+                <input type="text" class="form-control" id="lastName" th:field="*{lastName}" required>
+                <label for="email">Email:</label>
+                <input type="email" class="form-control" id="email" th:field="*{email}" required>
+                <label for="seat">Select a Seat:</label>
+                <select id="seat" name="seat" th:field="*{seat.id}"  required>
+                        <option th:each="se : ${seats}" th:value="${se.id}" th:text="${se.zone + ' - ' + se.number}"></option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Reserve</button>
+        </form>
+    </div>
+</body>
+</html>

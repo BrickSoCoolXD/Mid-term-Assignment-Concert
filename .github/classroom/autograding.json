@@ -1,0 +1,40 @@
+{
+  "tests": [
+    {
+      "name": "addConcertandPerformer",
+      "setup": "",
+      "run": "mvn verify -Dtest=ConcertRepositoryTest#addConcertandPerformer -DfailIfNoTests=false -am --file pom.xml",
+      "input": "",
+      "output": "",
+      "timeout": 10,
+      "points": 2
+    },
+    {
+      "name": "addReservation",
+      "setup": "",
+      "run": "mvn verify -Dtest=ConcertRepositoryTest#addReservation -DfailIfNoTests=false -am --file pom.xml",
+      "input": "",
+      "output": "",
+      "timeout": 10,
+      "points": 2
+    },
+    {
+      "name": "testReserveSeatForm",
+      "setup": "",
+      "run": "mvn verify -Dtest=ConcertControllerTest#testReserveSeatForm -DfailIfNoTests=false -am --file pom.xml",
+      "input": "",
+      "output": "",
+      "timeout": 10,
+      "points": 2
+    },
+    {
+      "name": "testReserveSeat",
+      "setup": "",
+      "run": "mvn verify -Dtest=ConcertControllerTest#testReserveSeat -DfailIfNoTests=false -am --file pom.xml",
+      "input": "",
+      "output": "",
+      "timeout": 10,
+      "points": 2
+    }
+   ]
+}
