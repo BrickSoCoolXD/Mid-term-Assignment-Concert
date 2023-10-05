@@ -10,20 +10,26 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 
 //TODO: add proper annotation
+@Entity
+@Table(name = "Seat")
 public class Seat {
 
     //TODO: add proper annotation
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String number;
     private String zone;
     private boolean booked;
 
     //TODO: add proper annotation for relationship to concert
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "concert_id")
     private Concert concert;
-
 
     public Long getId() {
         return id;

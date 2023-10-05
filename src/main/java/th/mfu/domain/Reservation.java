@@ -5,18 +5,27 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 //TODO: add proper annotation
+@Entity
+@Table(name = "Reservation")
 public class Reservation {
     
     //TODO: add proper annotation
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String firstName;
     private String lastName;
     private String email;
 
     //TODO: add proper annotation for relationship to seat
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "seat_id")
     private Seat seat;
 
     public Long getId() {

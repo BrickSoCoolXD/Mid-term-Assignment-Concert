@@ -26,6 +26,7 @@ import th.mfu.domain.Seat;
 
 @Controller
 public class ConcertController {
+    // Create auto wired
     @Autowired
     ConcertRepository concertRepo;
 
@@ -35,31 +36,63 @@ public class ConcertController {
     @Autowired
     ReservationRepository reservationRepo;
 
-    //TODO: add proper annotation for GET method
-    public String book(Model model) {
-        // TODO: list all concerts
-        // TODO: return a template to list concerts
-        return "";
+    // Constructure for controller
+    public ConcertController(ConcertRepository concertRepositoryrepository, SeatRepository seatRepository,
+            ReservationRepository reservationRepository) {
+        this.concertRepo = concertRepositoryrepository;
+        this.seatRepo = seatRepository;
+        this.reservationRepo = reservationRepository;
     }
 
-    //TODO: add proper annotation for GET method
+    // TODO: add proper annotation for GET method
+    @GetMapping("/book")
+    public String book(Model model) {
+        // List all concerts
+        List<Concert> allConcerts = (List<Concert>) concertRepo.findAll();
+        model.addAttribute("concerts", allConcerts); // Use "concerts" as the attribute name
+        return "book";
+    }
+
+    // TODO: add proper annotation for GET method
+    @GetMapping("/book/concerts/{concertId}")
     public String reserveSeatForm(@PathVariable Long concertId, Model model) {
-        // TODO: add concert to model
+        Concert concert = concertRepo.findById(concertId).orElse(null);
+        if (concert == null) {
+            return "redirect:/concerts/";
+        }
+        // Add the concert to the model
+        model.addAttribute("concert", concert);
+        model.addAttribute("reservation", new Reservation());
 
-        // TODO: add empty reservation to model
+        // Find availble Seat
+        List<Seat> availableSeats = seatRepo.findByBookedFalseAndConcertId(concertId);
 
-        // TODO: find available seats (booked=false) by given concert's id to the model
-        return "";
+        model.addAttribute("seats", availableSeats);
+
+        // return
+        return "reserve-seat";
     }
 
     @Transactional
-    //TODO: add proper annotation for POST method
-    public String reserveSeat(@ModelAttribute Reservation reservation, @PathVariable Long concertId, Model model) {
-        // TODO: find selectd seat by id
-        //TODO: set booked to true
-        //TODO: save seat
-        // TODO: save reservation using reservationRepo
-        return "";
+    // TODO: add proper annotation for POST method
+    @PostMapping("/book/concerts/{concertId}")
+    public String reserveSeat(@PathVariable Long concertId, @ModelAttribute Reservation reservation) {
+        // Find the selected seat by its ID
+        Seat selectedSeat = seatRepo.findById(reservation.getSeat().getId()).orElse(null);
+
+        if (selectedSeat != null && !selectedSeat.isBooked()) {
+            // Set the selected seat's booked status to true
+            selectedSeat.setBooked(true);
+
+            // Save the updated seat
+            seatRepo.save(selectedSeat);
+
+            // Save the reservation
+            reservationRepo.save(reservation);
+        }
+
+        // Redirect to the first page /book
+        return "redirect:/book";
     }
 
     /*************************************/
@@ -116,7 +149,4 @@ public class ConcertController {
         seatRepo.save(newseat);
         return "redirect:/concerts/" + id + "/seats";
     }
-
-   
-
 }

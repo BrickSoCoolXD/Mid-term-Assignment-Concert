@@ -1,28 +1,42 @@
 package th.mfu.domain;
 
+import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "Concert")
 //TODO: add proper annotation
 public class Concert {
 
     //TODO: add proper annotation 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
     private Date date;
 
     //TODO: add proper annotation
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "concert")
     private Performer performer;
+
+    @OneToMany(mappedBy = "concert")
+    private List<Reservation> reservations;
     
 
     public Concert() {
+        // Default Constructor
     }
+
     public Concert(String title) {
         this.title = title;
     }
