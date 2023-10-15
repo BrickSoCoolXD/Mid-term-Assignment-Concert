@@ -7,7 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 //TODO: add proper annotation
@@ -20,9 +19,6 @@ public class Performer {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
-
-    @ManyToMany(mappedBy = "performers")
-    private List<Concert> concerts;
 
     public Performer(Long id, String name) {
         this.id = id;

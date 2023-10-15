@@ -28,7 +28,7 @@ public class Concert {
     private Date date;
 
     //TODO: add proper annotation
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "concert")
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "performer_id")
     private Performer performer;
 
