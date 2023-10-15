@@ -14,7 +14,7 @@
         <ul class="list-group">
             <!--TODO: add <li> for listing all seats -->
             <li th:each="seat : ${seats}" class="list-group-item">
-                <span th:text="${seat.number}"></span> 
+                <span th:text="${seat.number}"></span>
                 <span class="ml-3" th:text="${seat.zone}"></span>
                 <span class="ml-3" th:text="${seat.booked}"></span>
             </li>

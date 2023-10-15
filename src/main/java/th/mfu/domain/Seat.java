@@ -26,10 +26,25 @@ public class Seat {
     private String zone;
     private boolean booked;
 
+
     //TODO: add proper annotation for relationship to concert
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "concert_id")
     private Concert concert;
+
+    // Constructure
+    public Seat(Long id, String number, String zone, boolean booked, Concert concert) {
+        this.id = id;
+        this.number = number;
+        this.zone = zone;
+        this.booked = booked;
+        this.concert = concert;
+    }
+
+    // default default
+    public Seat() {
+        // Default Constructor
+    }
 
     public Long getId() {
         return id;

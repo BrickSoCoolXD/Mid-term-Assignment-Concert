@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -37,9 +38,9 @@ public class ConcertController {
     ReservationRepository reservationRepo;
 
     // Constructure for controller
-    public ConcertController(ConcertRepository concertRepositoryrepository, SeatRepository seatRepository,
+    public ConcertController(ConcertRepository concertRepository, SeatRepository seatRepository,
             ReservationRepository reservationRepository) {
-        this.concertRepo = concertRepositoryrepository;
+        this.concertRepo = concertRepository;
         this.seatRepo = seatRepository;
         this.reservationRepo = reservationRepository;
     }
@@ -48,53 +49,54 @@ public class ConcertController {
     @GetMapping("/book")
     public String book(Model model) {
         // List all concerts
-        List<Concert> allConcerts = (List<Concert>) concertRepo.findAll();
-        model.addAttribute("concerts", allConcerts); // Use "concerts" as the attribute name
+        List<Concert> concerts = (List<Concert>) concertRepo.findAll();
+        model.addAttribute("concerts", concerts); // Use "concerts" as the attribute name
         return "book";
     }
 
     // TODO: add proper annotation for GET method
     @GetMapping("/book/concerts/{concertId}")
     public String reserveSeatForm(@PathVariable Long concertId, Model model) {
-        Concert concert = concertRepo.findById(concertId).orElse(null);
-        if (concert == null) {
-            return "redirect:/concerts/";
+        Optional<Concert> concertOptional = concertRepo.findById(concertId);
+
+        if (concertOptional.isPresent()) {
+            Concert concert = concertOptional.get();
+            model.addAttribute("concert", concert);
+        } else {
+            // Handle the case Optional
+
         }
-        // Add the concert to the model
-        model.addAttribute("concert", concert);
-        model.addAttribute("reservation", new Reservation());
 
-        // Find availble Seat
+        Reservation reservation = new Reservation();
+        model.addAttribute("reservation", reservation);
+
         List<Seat> availableSeats = seatRepo.findByBookedFalseAndConcertId(concertId);
+        model.addAttribute("availableSeats", availableSeats);
 
+        // Add the "seats" attribute
         model.addAttribute("seats", availableSeats);
 
-        // return
         return "reserve-seat";
     }
 
     @Transactional
-    // TODO: add proper annotation for POST method
     @PostMapping("/book/concerts/{concertId}")
-    public String reserveSeat(@PathVariable Long concertId, @ModelAttribute Reservation reservation) {
-        // Find the selected seat by its ID
-        Seat selectedSeat = seatRepo.findById(reservation.getSeat().getId()).orElse(null);
+    public String reserveSeat(@ModelAttribute Reservation reservation, @PathVariable Long concertId, Model model) {
+        Optional<Seat> seatOptional = seatRepo.findById(reservation.getSeat().getId());
 
-        if (selectedSeat != null && !selectedSeat.isBooked()) {
-            // Set the selected seat's booked status to true
-            selectedSeat.setBooked(true);
-
-            // Save the updated seat
-            seatRepo.save(selectedSeat);
-
-            // Save the reservation
-            reservationRepo.save(reservation);
+        if (seatOptional.isPresent()) {
+            Seat seat = seatOptional.get(); // Use get() to retrieve the value
+            seat.setBooked(true);
+            seatRepo.save(seat);
+        } else {
+            // Handle the case where the Optional object does not contain a value.
+            return "redirect:/book"; // or other error handling
         }
 
-        // Redirect to the first page /book
+        reservationRepo.save(reservation);
+
         return "redirect:/book";
     }
-
     /*************************************/
     /* No Modification beyond this line */
     /*************************************/

@@ -23,10 +23,25 @@ public class Reservation {
     private String lastName;
     private String email;
 
+
     //TODO: add proper annotation for relationship to seat
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "seat_id")
     private Seat seat;
+
+    // Constructure
+    public Reservation(Long id, String firstName, String lastName, String email, Seat seat) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.seat = seat;
+    }
+
+    // Default Constructure
+    public Reservation() {
+        // Default Constructor
+    }
 
     public Long getId() {
         return id;
