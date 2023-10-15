@@ -10,41 +10,25 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
-import javax.persistence.Table;
 
 
 //TODO: add proper annotation
 @Entity
-@Table(name = "Seat")
 public class Seat {
 
     //TODO: add proper annotation
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String number;
     private String zone;
     private boolean booked;
-
 
     //TODO: add proper annotation for relationship to concert
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "concert_id")
     private Concert concert;
 
-    // Constructure
-    public Seat(Long id, String number, String zone, boolean booked, Concert concert) {
-        this.id = id;
-        this.number = number;
-        this.zone = zone;
-        this.booked = booked;
-        this.concert = concert;
-    }
-
-    // default default
-    public Seat() {
-        // Default Constructor
-    }
 
     public Long getId() {
         return id;

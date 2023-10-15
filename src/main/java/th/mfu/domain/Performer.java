@@ -1,30 +1,29 @@
 package th.mfu.domain;
 
-import java.util.List;
-
 import javax.annotation.Generated;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
+
+import net.bytebuddy.implementation.bind.annotation.IgnoreForBinding;
 
 //TODO: add proper annotation
 @Entity
-@Table(name = "Performer")
+
 public class Performer {
 
-    //TODO: add proper annotation
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    // TODO: add proper annotation
     private Long id;
     private String name;
+
 
     public Performer(Long id, String name) {
         this.id = id;
         this.name = name;
     }
-
     public Long getId() {
         return id;
     }
@@ -37,7 +36,6 @@ public class Performer {
     public void setName(String name) {
         this.name = name;
     }
-    }
 
-    
 
+}

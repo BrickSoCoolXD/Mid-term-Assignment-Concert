@@ -1,8 +1,6 @@
 package th.mfu.domain;
 
-import java.time.LocalDateTime;
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -10,17 +8,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.Table;
 
-@Entity
-@Table(name = "Concert")
 //TODO: add proper annotation
+@Entity
 public class Concert {
 
-    //TODO: add proper annotation 
-    // fields attributes
+    // TODO: add proper annotation
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -32,19 +26,9 @@ public class Concert {
     @JoinColumn(name = "performer_id")
     private Performer performer;
 
-    
-    // Constructure
-    public Concert(Long id, String title, Date date, Performer performer, List<Reservation> reservations) {
-        this.id = id;
-        this.title = title;
-        this.date = date;
-        this.performer = performer;
-    }
 
     public Concert() {
-        // Default Constructor
     }
-
     public Concert(String title) {
         this.title = title;
     }

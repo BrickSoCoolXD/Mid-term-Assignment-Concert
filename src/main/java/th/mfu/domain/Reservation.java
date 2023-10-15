@@ -6,42 +6,24 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
-import javax.persistence.Table;
 
 //TODO: add proper annotation
 @Entity
-@Table(name = "Reservation")
 public class Reservation {
     
     //TODO: add proper annotation
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String firstName;
     private String lastName;
     private String email;
 
-
     //TODO: add proper annotation for relationship to seat
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "seat_id")
     private Seat seat;
-
-    // Constructure
-    public Reservation(Long id, String firstName, String lastName, String email, Seat seat) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.seat = seat;
-    }
-
-    // Default Constructure
-    public Reservation() {
-        // Default Constructor
-    }
 
     public Long getId() {
         return id;
