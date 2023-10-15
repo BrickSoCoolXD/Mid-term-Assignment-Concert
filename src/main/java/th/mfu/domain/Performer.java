@@ -20,7 +20,7 @@ public class Performer {
     private String name;
 
 
-    public Performer(Long id, String name) {
+    public Performer() {
         this.id = id;
         this.name = name;
     }
