@@ -75,6 +75,13 @@ You need to modify the following views:
 Modify **all** views (including `list-concert.html`, `seat-mgmt.html` and `add-concert-form.html`) to look beautiful by adding CSS. You can use Bootstrap or any other CSS framework. You can also use your own CSS. You may adds some figure or icons to make the UI  **friendlier**. Please put the screenshots of modified views below.
 
 **Put your screnshots here for 2 points**
+pictures of web - page with bootstrap and css style!
+
+![Alt text](/img/img1.png)
+![Alt text](/img/img2.png)
+![Alt text](/img/img3.png)
+![Alt text](/img/img4.png)
+![Alt text](/img/img5.png)
 
 ## Test Web App using Browser
 Run the application using App.java class. Open the browser and go to `http://xxxxx/book`, where xxxx is your hostname and port such as `localhost:8100` or on codespace: `xxxxxxx-8100.app.github.dev` .

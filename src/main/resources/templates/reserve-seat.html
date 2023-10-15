@@ -4,24 +4,61 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Make a Reservation</title>
-    <!-- Include Bootstrap CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            margin-top: 50px;
+        }
+
+        .page-title {
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .custom-select {
+            background-color: #fff;
+            border: 1px solid #ccc;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
-    <div class="container mt-5">
-        <!--TODO: complete th:action in the <form> -->
+    <div class="container">
+        <h1 class="page-title">Make a Reservation</h1>
         <form th:action="@{/book/concerts/{id}(id=${concert.id})}" th:object="${reservation}" method="post">
             <div class="form-group">
-                <!-- TODO: add label and field for firstName, lastName and email  -->
-                <label for="firstName">First name:</label>
+                <label for="firstName">First Name:</label>
                 <input type="text" class="form-control" id="firstName" th:field="*{firstName}" required>
-                <label for="lastName">Last name:</label>
+            </div>
+            <div class="form-group">
+                <label for="lastName">Last Name:</label>
                 <input type="text" class="form-control" id="lastName" th:field="*{lastName}" required>
+            </div>
+            <div class="form-group">
                 <label for="email">Email:</label>
                 <input type="email" class="form-control" id="email" th:field="*{email}" required>
+            </div>
+            <div class="form-group">
                 <label for="seat">Select a Seat:</label>
-                <select id="seat" name="seat" th:field="*{seat.id}"  required>
-                        <option th:each="se : ${seats}" th:value="${se.id}" th:text="${se.zone + ' - ' + se.number}"></option>
+                <select id="seat" name="seat" class="custom-select" th:field="*{seat.id}" required>
+                    <option value="" selected>Select a Seat</option>
+                    <option th:each="se : ${seats}" th:value="${se.id}" th:text="${se.zone + ' - ' + se.number}"></option>
                 </select>
             </div>
             <button type="submit" class="btn btn-primary">Reserve</button>
